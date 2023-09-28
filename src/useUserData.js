@@ -12,14 +12,17 @@ export default function useUserData() {
     lastLogin: "2023-09-08 12:15:56",
     workArea: ["/usr/home", "/home","/","nasa","OMS","White House"]
   });
+  const isBirthdateBeforeToday = (birthdate,today) => {
+    const monthDifference = today.getMonth() - birthdate.getMonth();
+    return monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthdate.getDate())
+  }
 
   const calculateAge = () => {
     const birthdate = new Date(user.value.birthdate);
     console.log(birthdate)
     const today = new Date();
     let age = today.getFullYear() - birthdate.getFullYear();
-    const monthDifference = today.getMonth() - birthdate.getMonth();
-    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthdate.getDate())) {
+    if (isBirthdateBeforeToday(birthdate,today)) {
       age--;
     }
     return age;
